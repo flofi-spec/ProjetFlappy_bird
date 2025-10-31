@@ -11,8 +11,8 @@
 import javax.swing.*;//Permet de créer des interfaces graphiques modernes et contient les objets graphiques,like les boutons,panneaux,fenetres,cases a cocher
 import java.awt.*;//contient les elements graphiques like les couleurs,polices,formes geometriques,coordonnées
 import java.awt.event.*;//permet de controler les evenements déclenchés par l’utilisateur ou le système dont les keyEvents ma chewrie
-import java.util.ArrayList;//Une structure de données qui permet de stocker plusieurs objets de façon dynamiquecontrairement aux tableaux sa taille augmente en fonction des elements ajoutés 
-import java.util.Random;//dois je encore expliquer copine
+import java.util.ArrayList;//Une structure de données qui permet de stocker plusieurs objets de façon dynamique contrairement aux tableaux sa taille augmente en fonction des elements ajoutés 
+import java.util.Random;//dois je encore expliquer falonne du futur
 
 
 public class Game extends JPanel implements ActionListener, KeyListener {
@@ -70,7 +70,7 @@ timer.start();
     int gap =200;
     int heights = getHeight();
 if (heights < 300) heights = 500;   // jamais plus petit que 500
-if (heights > 700) heights = 500;   // jamais plus grand que 720
+if (heights > 700) heights = 500;   // jamais plus grand que 700
 
     int maxHeight = heights -gap;
     
@@ -83,7 +83,7 @@ if (heights > 700) heights = 500;   // jamais plus grand que 720
 int height = random.nextInt(minHeight,maxHeight);
 
 pipes.add(new Rectangle(500, 0, 60, height)); 
-pipes.add(new Rectangle(500, height + gap, 60,600));
+pipes.add(new Rectangle(500, height + gap, 60,600/* autre pb:ici je garde 600 pour l'instant mm si je sais que c'est faux car la formule getHeight()-height-gap ne marche pas*/));
 
 
 
@@ -139,7 +139,7 @@ public void actionPerformed(ActionEvent e) {
     birdY += velocity;
     if (birdY < 0) {
     birdY = 0;
-    velocity = 0; // on annule la vitesse pour éviter qu'il rebondisse hors écran
+    velocity = 0; 
 }
 
 
@@ -152,7 +152,7 @@ public void actionPerformed(ActionEvent e) {
 
         if (topPipe.x + topPipe.width < 0) {
             pipes.remove(i);
-            pipes.remove(i); // bottomPipe glisse à la même position après retrait
+            pipes.remove(i); 
             score++;
             addPipe();
             continue;
@@ -181,36 +181,36 @@ public void keyPressed(KeyEvent e) {
         if (!started) {
             started = true;
         } else if (!gameOver) {
-            velocity = -10; // battement d’aile
+            velocity = -10;
         } else {
-            reset(); // si game over + espace = nouveau départ
+            reset(); 
         }
     }
 
     if (e.getKeyCode() == KeyEvent.VK_R) {
-        reset(); // touche R redémarre aussi
+        reset(); 
     }
 }
 
 public void reset() {
-    // Réinitialisation de l'oiseau
+    
     birdX = 100;
-    birdY = getHeight() / 2;
+    birdY = 250 /* getHeight()/2 represente l'ancienne valeur mais avec les 250 du debut ça marche  */;
     velocity = 0;
 
-    // Réinitialisation du score et de l'état du jeu
+    
     score = 0;
     gameOver = false;
     started = false;
 
-    // Vider tous les tuyaux existants
+    
     pipes.clear();
 
-    // Redessiner la fenêtre et s'assurer qu'elle a une taille valide
+    
     revalidate();
     repaint();
 
-    // Générer les tuyaux **après que la fenêtre ait sa taille**
+    
     SwingUtilities.invokeLater(() -> {
         if (getHeight() > 0) {
             addPipe();
@@ -218,7 +218,7 @@ public void reset() {
         }
     });
 
-    // Redémarrer le timer si nécessaire
+    
     timer.start();
 }
 
